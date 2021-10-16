@@ -15,7 +15,7 @@ class LoginView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text("Login"),
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
       ),
       backgroundColor: Colors.grey,
       // ignore: avoid_unnecessary_containers

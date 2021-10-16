@@ -7,7 +7,7 @@ import { Request , Response } from "express";
 export class UserRepository extends Repository<UserEntity>{
 
     async saveUserData(req : Request, res : Response , encryptedPassword : any) {
-        let {username,useremail} = req.body;
+        let {username,useremail,userimage} = req.body;
         let userAlreadyExists : boolean = (await this.createQueryBuilder("users").
         select().
         where("users.useremail = :useremail",{
@@ -22,6 +22,7 @@ export class UserRepository extends Repository<UserEntity>{
             })
         }
         this.createQueryBuilder("users").insert().values({
+            userimage,
             useremail,
             userpassword : encryptedPassword,
             username

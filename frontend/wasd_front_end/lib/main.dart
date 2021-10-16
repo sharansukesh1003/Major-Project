@@ -4,30 +4,22 @@ import 'package:wasd_front_end/app/providers/provider.dart';
 import 'package:wasd_front_end/app/routes/routes.dart';
 
 void main() {
-  runApp(const Core());
+  runApp(const MyApp());
 }
 
-class Core extends StatelessWidget {
-  const Core({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: providers,
-      child: const Lava()
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        initialRoute: SplashRoute,
+        routes: routes,
+        ),
       );
     }
-}
-class Lava extends StatelessWidget{
-  const Lava({Key? key}) : super(key: key);
-
- @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      initialRoute: DeciderRoute,
-      routes: routes,
-      );
-  }
 }

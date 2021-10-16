@@ -14,7 +14,7 @@ class HomeView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           cacheService.deleteCache(key: "jwt").whenComplete(() => 
-          Navigator.of(context).pushNamed(LoginRoute)
+          Navigator.of(context).popAndPushNamed(LoginRoute)
           );
         },
       ),

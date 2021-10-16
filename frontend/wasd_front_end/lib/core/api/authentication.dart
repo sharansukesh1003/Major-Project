@@ -5,16 +5,23 @@ import 'package:wasd_front_end/app/routes/apiroutes.dart';
 class AuthenticationAPI{
   final client = http.Client();
   // Create new user
-  Future signUp({required String name,required String email,required String password}) async {
+  Future signUp(
+    {required String username,
+    required String useremail,
+    required String userpassword,
+    required String userimage,
+  }
+  ) async {
     String subUrl = "/user/signup";
     final Uri uri = Uri.parse(APIRoutes.BaseUrl + subUrl);
     // ignore: avoid_print
     print(uri);
     final http.Response response = await client.post(uri,
     body: jsonEncode({
-      "username" : name,
-      "useremail" : email,
-      "userpassword" : password,
+      "username" :username,
+      "useremail" : useremail,
+      "userpassword" : userpassword,
+      "userimage" : userimage,
     }),
     headers: {
       'Content-type' : 'application/json',
