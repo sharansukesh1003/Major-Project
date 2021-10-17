@@ -1,5 +1,5 @@
-import 'package:wasd_front_end/views/authentication/login.dart';
-import 'package:wasd_front_end/views/authentication/signup.dart';
+import 'package:wasd_front_end/views/authentication_view/login.dart';
+import 'package:wasd_front_end/views/authentication_view/signup.dart';
 import 'package:wasd_front_end/views/decider_view/deciderview.dart';
 import 'package:wasd_front_end/views/home_view/homeview.dart';
 import 'package:wasd_front_end/views/splash_view/splashview.dart';

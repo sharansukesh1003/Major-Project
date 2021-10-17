@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:wasd_front_end/core/services/cacheservice.dart';
 import 'package:wasd_front_end/views/home_view/homeview.dart';
-import 'package:wasd_front_end/views/introduction/introductionview.dart';
+import 'package:wasd_front_end/views/introduction_view/introductionview.dart';
 
 // ignore: use_key_in_widget_constructors
 class DeciderView extends StatelessWidget {

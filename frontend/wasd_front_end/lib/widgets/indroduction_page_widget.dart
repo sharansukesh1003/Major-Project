@@ -38,7 +38,7 @@ class IntroductionPageList{
           ),
         ),
           image: Center(
-            child: Image.network("https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80", 
+            child: Image.asset('lib/static/intro_screen_1.jfif', 
             height: double.infinity,
             width: double.infinity,
             fit: BoxFit.cover,
@@ -78,7 +78,7 @@ class IntroductionPageList{
           ),
         ),
           image: Center(
-            child: Image.network("https://images.unsplash.com/photo-1511512578047-dfb367046420?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1171&q=80", 
+            child: Image.asset('lib/static/intro_screen_2.jfif', 
             height: double.infinity,
             width: double.infinity,
             fit: BoxFit.cover,

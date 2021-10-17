@@ -1,9 +1,9 @@
 // ignore_for_file: avoid_print
 
 import 'dart:async';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:wasd_front_end/app/routes/routes.dart';
+import 'package:wasd_front_end/constants/constants.dart';
 
 // ignore: use_key_in_widget_constructors
 class SplashView extends StatefulWidget {
@@ -25,28 +25,10 @@ class _SplashViewState extends State<SplashView> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
+    return const Scaffold(
+      backgroundColor: ConstantColors.primaryColor,
       body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AnimatedTextKit(
-              animatedTexts: [
-                TypewriterAnimatedText(
-                  'Cryptopia.',
-                  textStyle: const TextStyle(
-                      fontSize: 36.0,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                  speed: const Duration(milliseconds: 200),
-                ),
-              ],
-              totalRepeatCount: 1,
-            ),
-          ],
-        ),
+        child: Image(image: AssetImage('lib/static/logo.png')),
       ),
     );
   }
