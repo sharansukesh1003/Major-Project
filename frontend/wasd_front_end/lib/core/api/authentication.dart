@@ -61,4 +61,21 @@ class AuthenticationAPI{
       return body;
     }
   }
+
+  Future decodeJwt({required dynamic token}) async {
+    String subUrl = "/user/decode-jwt";
+    final Uri uri = Uri.parse(APIRoutes.BaseUrl + subUrl);
+    final http.Response response = await client.get(uri,
+    headers: {
+      'Content-type' : 'application/json',
+      'Accept' : 'application/json',
+      "Access-Control-Allow-Origin" : "*",
+      "Authorization" : token
+    });
+    final statusCode = response.statusCode;
+    final body = response.body;
+    if(statusCode == 200){
+      return body;
+    }
+  }
 }

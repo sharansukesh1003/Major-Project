@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wasd_front_end/app/routes/routes.dart';
 import 'package:wasd_front_end/constants/constants.dart';
-import 'package:wasd_front_end/core/notifier/authenticationnotifier.dart';
+import 'package:wasd_front_end/core/notifier/authentication_notifier.dart';
 
 // ignore: use_key_in_widget_constructors
 class LoginView extends StatelessWidget {
@@ -35,7 +35,7 @@ class LoginView extends StatelessWidget {
                       width: double.infinity,
                       color: Colors.black45,
                     ),
-                    const Center(child: Image(image: AssetImage('lib/static/logo.png')),)
+                    const Center(child: Image(image: AssetImage('lib/static/logo.png',),height: 150,width: 150,),)
                   ],
                 ),
               ),

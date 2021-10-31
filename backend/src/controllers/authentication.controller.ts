@@ -66,7 +66,7 @@ class AuthenticationController{
         let jwt_secret_key = process.env.JWT_SECRET_KEY as string;
         let {useremail, userpassword} = req.body;
         // Validate E-mail.
-        if(!AuthenticationController.validateEmail){
+        if(!AuthenticationController.validateEmail(useremail)){
             return res.send({
                 authetication : false,
                 message : "Enter Valid E-mail",
@@ -80,7 +80,7 @@ class AuthenticationController{
         bcrypt.compare(
             userpassword,
             basePassword,
-            async(error : any, result : any) => {
+            async (error : any, result : any) => {
             if(error){
                 return res.send({
                     code : 401,
@@ -118,6 +118,29 @@ class AuthenticationController{
             });
         });
     }
+
+    // Decode jwt
+    static async decodeJwt(req : Request, res : Response){
+        let token = req.headers.authorization as string;
+        let jwt_secret_key = process.env.JWT_SECRET_KEY as string;
+        jwt.verify(token, jwt_secret_key, async (error : any, data : any) => {
+            if(error){
+                console.log(error)
+                return res.send({
+                    code : 403,
+                    message : null
+                })
+            }
+            else{
+                var useremail = data.useremail!
+                return res.send({
+                    code : 200,
+                    message : useremail
+                })
+            }
+        })
+    }
+
 }
 
 export { AuthenticationController };

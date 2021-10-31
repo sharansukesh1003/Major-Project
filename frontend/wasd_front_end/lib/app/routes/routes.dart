@@ -1,3 +1,4 @@
+import 'package:wasd_front_end/views/add_posts/post_view.dart';
 import 'package:wasd_front_end/views/authentication_view/login.dart';
 import 'package:wasd_front_end/views/authentication_view/signup.dart';
 import 'package:wasd_front_end/views/decider_view/deciderview.dart';
@@ -14,11 +15,14 @@ const String HomeRoute = "/home";
 const String DeciderRoute = "/decider";
 // ignore: constant_identifier_names
 const String SplashRoute = "/splash";
+// ignore: constant_identifier_names
+const String AddPostRoute = "/add-post";
 
 final routes = {
   LoginRoute : (context) => LoginView(),
   SignUpRoute : (context) => SignUpView(),
   HomeRoute : (context) => HomeView(),
   DeciderRoute : (context) => DeciderView(),
-  SplashRoute : (context) => SplashView()
+  SplashRoute : (context) => SplashView(),
+  AddPostRoute : (context) => AddPost()
 };

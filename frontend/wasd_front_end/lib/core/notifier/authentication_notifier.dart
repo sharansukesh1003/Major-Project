@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -51,5 +52,22 @@ class AuthenticationNotifier extends ChangeNotifier {
     catch(error){
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Something went wrong")));
     }
+  }
+  Future decodeJwt({required dynamic token}) async {
+    try{
+      var response = await _authenticationAPI.decodeJwt(token: token);
+      return response;
+    }
+    catch(error){
+      print(error);
+    }
+  }
+  Future <String> fetchUserEmail({required BuildContext context}) async {
+    var token = await cacheService.readCache(key: "jwt");
+    var dataToken = await decodeJwt(token: token);
+    final Map<String,dynamic> parsedDataToken = await jsonDecode(dataToken);
+    final userEmail = parsedDataToken["message"];
+    print(userEmail);
+    return userEmail;
   }
 }

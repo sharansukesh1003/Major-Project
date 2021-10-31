@@ -1,4 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { PostRepository } from "../repository/post.repository";
+import { PostEntity } from "./post.entity";
 
 @Entity("users")
 
@@ -24,4 +26,9 @@ export class UserEntity extends BaseEntity{
         nullable : true
     })
     userimage!: string;
+
+    // Relations
+    @OneToMany(() => PostEntity, (user_post)=> user_post.post_user)
+    @JoinColumn()
+    user_post! : PostEntity[];
 }
