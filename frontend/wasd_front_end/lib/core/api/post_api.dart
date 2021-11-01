@@ -1,8 +1,8 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:wasd_front_end/app/routes/apiroutes.dart';
+import 'package:wasd_front_end/core/dto/post_dto.dart';
 
 class PostAPI{
   final client = http.Client();
@@ -12,21 +12,34 @@ class PostAPI{
       "Access-Control-Allow-Origin" : "*"
   };
   // Create new user
-  Future addPost(
-    {required String post_title,
-    required String useremail,
-    }
-  ) async {
-    String subUrl = "/post/add/$useremail";
+  Future addPost(PostDTO postDTO) async {
+    String subUrl = "/post/add/${postDTO.useremail}";
     final Uri uri = Uri.parse(APIRoutes.BaseUrl + subUrl);
     try{
       final http.Response response = await client.post(uri,
-      body: jsonEncode({"post_title" : post_title,}),headers: header);
-    final statusCode = response.statusCode;
-    final body = response.body;
-    print(body);
-    if(statusCode == 200){
-      return body;
+      body: jsonEncode(postDTO.toJson()),headers: header);
+      final statusCode = response.statusCode;
+      final body = response.body;
+      print(body);
+      if(statusCode == 200){
+        return body;
+        }
+    }
+    catch(error){
+      print(error.toString());
+    }
+  }
+  Future fetchPost() async {
+    String subUrl = "/post/";
+    final Uri uri = Uri.parse(APIRoutes.BaseUrl + subUrl);
+    try{
+      final http.Response response = await client.get(uri,
+      headers: header);
+      final statusCode = response.statusCode;
+      final body = response.body;
+      print(body);
+      if(statusCode == 200){
+        return body;
       }
     }
     catch(error){
