@@ -5,7 +5,6 @@ import 'package:wasd_front_end/app/routes/routes.dart';
 import 'package:wasd_front_end/core/model/post_model.dart';
 import 'package:wasd_front_end/core/notifier/authentication_notifier.dart';
 import 'package:wasd_front_end/core/notifier/post_notifier.dart';
-// ignore: use_key_in_widget_constructors
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
