@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        initialRoute: LoginRoute,
+        initialRoute: SplashRoute,
         routes: routes,
         ),
       );

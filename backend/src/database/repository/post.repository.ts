@@ -43,7 +43,7 @@ export class PostRepository extends Repository<PostEntity>{
             .leftJoinAndSelect("post.post_user","users")
             .select()
             .getMany()
-
+            console.log(post)
             if(post !== undefined){
                 return res.send({
                     code : 200,

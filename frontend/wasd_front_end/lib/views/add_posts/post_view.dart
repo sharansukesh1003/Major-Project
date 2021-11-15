@@ -47,7 +47,7 @@ class _AddPostState extends State<AddPost> {
                       postNotifier(true).selectedPostImage!)
                       )
                 ),
-              ) : const Text ("uPL;OAD"),
+              ) : const Text ("Upload Image"),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget> [
@@ -71,7 +71,7 @@ class _AddPostState extends State<AddPost> {
                   var post_title = titleController.text;
                   var post_image = postNotifier(false).uploadedImageUrl;
                   await postNotifier(false).uploadUserImage(context: context);
-                  if(post_image != null) {
+                  if (post_image != null) {
                     await postNotifier(false).addPost(
                       context : context,
                       postDTO: PostDTO(

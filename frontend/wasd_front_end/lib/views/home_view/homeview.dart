@@ -5,15 +5,27 @@ import 'package:wasd_front_end/app/routes/routes.dart';
 import 'package:wasd_front_end/core/model/post_model.dart';
 import 'package:wasd_front_end/core/notifier/authentication_notifier.dart';
 import 'package:wasd_front_end/core/notifier/post_notifier.dart';
+import 'package:wasd_front_end/core/services/cacheservice.dart';
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PostNotifier postNotifier(bool renderUri) => Provider.of<PostNotifier>(context,listen: renderUri);
+    CacheService _cacheService = CacheService();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
+         actions: [
+          IconButton(
+          onPressed: () {
+            _cacheService.deleteCache(key: "jwt");
+            Navigator.of(context).pushNamed(LoginRoute);
+          },
+          icon: const Icon(Icons.logout),
+        ),
+  ],
       ),
       floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
         onPressed: () async {
           postNotifier(false).fetchPost(context: context);
           final authenticationNotifier = Provider.of<AuthenticationNotifier>(context, listen: false);
