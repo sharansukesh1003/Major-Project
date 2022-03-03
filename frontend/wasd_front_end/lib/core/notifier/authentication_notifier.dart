@@ -25,7 +25,7 @@ class AuthenticationNotifier extends ChangeNotifier {
       final userCode = parsedValue['code'];
       if(userCode == 201){
         cacheService.writeCache(key: "jwt", value: userJwt);
-        Navigator.of(context).popAndPushNamed(HomeRoute);
+        Navigator.of(context).pushNamedAndRemoveUntil(HomeRoute, (Route route) => false);
       }
       else{
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(userJwt)));
@@ -43,7 +43,7 @@ class AuthenticationNotifier extends ChangeNotifier {
         final userCode = parsedValue['code'];
         if(userCode == 201){
           cacheService.writeCache(key: "jwt", value: userJwt);
-          Navigator.of(context).pushReplacementNamed(HomeRoute);
+          Navigator.of(context).popAndPushNamed(HomeRoute);
         }
         else{
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(userJwt)));

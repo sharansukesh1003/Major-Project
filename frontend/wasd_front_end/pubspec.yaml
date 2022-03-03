@@ -58,6 +58,24 @@ flutter:
     - lib/static/login_bg.png
     - lib/static/intro_screen_1.jfif
     - lib/static/intro_screen_2.jfif
+    - lib/static/profile.jpg
+    - lib/static/post0.jpg
+    - lib/static/post1.jpg
+    - lib/static/post2.jpg
+    - lib/static/post3.jpg
+    - lib/static/post4.jpg
+    - lib/static/max.jpg
+    - lib/static/decoy.jpg
+    - lib/static/trident.jpg
+    - lib/static/catalyst.jpg
+    - lib/static/hurrikane.jpg
+    - lib/static/logosh.jpg
+    - lib/static/mazzy.jpg
+    - lib/static/news1.jpg
+    - lib/static/news2.jpg
+    - lib/static/news3.png
+    - lib/static/news4.webp
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

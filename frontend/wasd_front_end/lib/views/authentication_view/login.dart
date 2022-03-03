@@ -119,7 +119,8 @@ class LoginView extends StatelessWidget {
                     ),
                     ),
                     onPressed: (){
-                      authenticationNotifier.login(email: emailController.text, password: passwordController.text,context: context);
+                      Navigator.of(context).popAndPushNamed(MainRoute);
+                      // authenticationNotifier.login(email: emailController.text, password: passwordController.text,context: context);
                     }),
                   const SizedBox(height: 10),
                    Row(
