@@ -8,7 +8,6 @@ import 'package:wasd_front_end/app/credentials/credentials.dart';
 import 'package:wasd_front_end/core/api/post_api.dart';
 import 'package:wasd_front_end/core/dto/post_dto.dart';
 import 'package:wasd_front_end/core/model/post_model.dart';
-import 'package:wasd_front_end/utils/snack_bar.dart';
 
 class PostNotifier extends ChangeNotifier{
   final PostAPI _postAPI = PostAPI();
@@ -23,7 +22,7 @@ class PostNotifier extends ChangeNotifier{
     required BuildContext context,
     required PostDTO postDTO
   }) async{
-    try{
+    try {
       await _postAPI.addPost(postDTO);
     }
     catch(error){
@@ -31,7 +30,7 @@ class PostNotifier extends ChangeNotifier{
     }
   }
 
-  Future fetchPost({required BuildContext context}) async{
+  Future fetchPost({required BuildContext context}) async {
     try{
       var response = await _postAPI.fetchPost();
       print(response);
@@ -66,14 +65,11 @@ class PostNotifier extends ChangeNotifier{
         folder: "wasd",
       ).then((value) {
         _uploadedImageUrl = value.url;
-        if(_uploadedImageUrl != null){
-          SnackBarUtility.showSnackBar(message: "Post Uploaded" ,context: context);
-        }
         notifyListeners();
         return _uploadedImageUrl;
       });
-    } catch (e) {
-      SnackBarUtility.showSnackBar(message: e.toString() ,context: context);
+    } catch(e) {
+      return e;
     }
   }
 

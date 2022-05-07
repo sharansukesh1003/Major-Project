@@ -2,16 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:wasd_front_end/app/routes/apiroutes.dart';
 
-class AuthenticationAPI{
+class AuthenticationAPI {
   final client = http.Client();
   // Create new user
-  Future signUp(
-    {required String username,
-    required String useremail,
-    required String userpassword,
-    required String userimage,
-  }
-  ) async {
+  Future signUp({ required String username, required String useremail, required String userpassword, required String userimage,}) async {
     String subUrl = "/user/signup";
     final Uri uri = Uri.parse(APIRoutes.BaseUrl + subUrl);
     // ignore: avoid_print

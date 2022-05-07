@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 class NewsTile extends StatefulWidget {
@@ -21,10 +23,7 @@ class _NewsTileState extends State<NewsTile> {
           height: 200,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image(
-              fit: BoxFit.cover,
-              image: AssetImage(widget.imageUrl),
-            ),
+            child: Image.network(widget.imageUrl, fit: BoxFit.cover)
           ),
         ),
         const SizedBox(

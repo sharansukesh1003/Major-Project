@@ -9,7 +9,7 @@ class PostDTO{
     required this.useremail
   });
 
-  Map<String,dynamic> toJson(){
+  Map <String,dynamic> toJson(){
     return {
       "post_title" : post_title,
       "post_images" : post_images,

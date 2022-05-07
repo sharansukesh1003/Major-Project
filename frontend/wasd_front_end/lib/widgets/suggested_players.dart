@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:wasd_front_end/constants/constants.dart';
 
@@ -35,10 +37,7 @@ class PlayerCard extends StatelessWidget {
         radius: 30,
         backgroundColor: Colors.white,
         child: ClipOval(
-        child: Image(
-        fit: BoxFit.cover,
-        image: AssetImage(profileImageUrl)
-            ),
+        child: Image.network(profileImageUrl, fit: BoxFit.cover)
           ),
         ),
       ),

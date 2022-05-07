@@ -2,11 +2,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wasd_front_end/app/routes/routes.dart';
 import 'package:wasd_front_end/constants/constants.dart';
-import 'package:wasd_front_end/core/notifier/authentication_notifier.dart';
-import 'package:wasd_front_end/core/notifier/utility_notifier.dart';
+import 'package:wasd_front_end/core/services/authenthication_service.dart';
 
 // ignore: use_key_in_widget_constructors
 class SignUpView extends StatelessWidget {
@@ -15,8 +13,6 @@ class SignUpView extends StatelessWidget {
     final userNameController = TextEditingController();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
-    var authenticationNotifier = Provider.of<AuthenticationNotifier>(context,listen: false);
-    var utilityNotifier = Provider.of<UtilityNotifier>(context, listen: false);
     return Scaffold(
       backgroundColor: ConstantColors.primaryColor,
       // ignore: avoid_unnecessary_containers
@@ -140,14 +136,21 @@ class SignUpView extends StatelessWidget {
                         fontWeight: FontWeight.bold
                       ),
                       ),
-                    onPressed: (){
-                      authenticationNotifier.signUp(
-                        context: context,
-                        username: userNameController.text,
-                        useremail: emailController.text,
-                        userpassword: passwordController.text,
-                        userimage: utilityNotifier.userimage!
+                    onPressed: () async {
+                      var data = await Authentication.signUp(emailController.text, userNameController.text, passwordController.text);
+                      if (data.success) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                          content: Text(data.message),)
                         );
+                        Navigator.of(context).pushNamed(LoginRoute);
+                      }
+                      else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                          content: Text(data.message),)
+                        );
+                      }
                     }),
                     Row(
                        mainAxisAlignment : MainAxisAlignment.center,

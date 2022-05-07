@@ -10,7 +10,6 @@ class Post {
         this.data,
         this.received,
     );
-
     int code;
     List<PostData> data;
     bool received;

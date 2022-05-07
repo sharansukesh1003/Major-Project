@@ -1,11 +1,13 @@
 // ignore_for_file: unused_local_variable, unused_import, prefer_const_constructors
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wasd_front_end/app/routes/routes.dart';
 import 'package:wasd_front_end/constants/constants.dart';
+import 'package:wasd_front_end/core/model/authentication_message.dart';
 import 'package:wasd_front_end/core/notifier/authentication_notifier.dart';
+import 'package:wasd_front_end/core/services/authenthication_service.dart';
+import 'package:wasd_front_end/core/services/cacheservice.dart';
 
 // ignore: use_key_in_widget_constructors
 class LoginView extends StatelessWidget {
@@ -13,7 +15,7 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
-    var authenticationNotifier = Provider.of<AuthenticationNotifier>(context,listen: false);
+    CacheService cacheService = CacheService();
     return Scaffold(
       backgroundColor: ConstantColors.primaryColor,
       // ignore: avoid_unnecessary_containers
@@ -116,11 +118,21 @@ class LoginView extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold
+                      ),
                     ),
-                    ),
-                    onPressed: (){
-                      Navigator.of(context).popAndPushNamed(MainRoute);
-                      // authenticationNotifier.login(email: emailController.text, password: passwordController.text,context: context);
+                    onPressed: () async {
+                      var data = await Authentication.login(emailController.text, passwordController.text);
+                      if (data.authentication) {
+                        await cacheService.writeCache(key: "jwt", value: data.token);
+                        await cacheService.writeCache(key: "id", value: data.id);
+                        Navigator.of(context).popAndPushNamed(MainRoute);
+                      }
+                      else { 
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                          content: Text(data.message),)
+                        );
+                      }
                     }),
                   const SizedBox(height: 10),
                    Row(

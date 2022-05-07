@@ -1,12 +1,40 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:wasd_front_end/constants/constants.dart';
+import 'package:wasd_front_end/core/services/player_matchmaking.dart';
+import 'package:wasd_front_end/views/search_view/custom_search_view.dart';
 import 'package:wasd_front_end/widgets/suggested_players.dart';
 
-class SearchView extends StatelessWidget {
+class SearchView extends StatefulWidget {
 
-  const SearchView();
+  const SearchView({Key? key}) : super(key: key);
+
+  @override
+  State<SearchView> createState() => _SearchViewState();
+}
+
+class _SearchViewState extends State<SearchView> {
+
+  Map <String, dynamic> data = {};
+  Map <String, dynamic> suggestedData = {};
+  bool _loading = true;
+
+  @override
+  void initState() {
+    recentlyJoined();
+    super.initState();
+  }
+
+  Future<dynamic> recentlyJoined() async {
+    var response = await MatchMaking.recentlyJoined();
+    var res = await MatchMaking.suggestedPlayers();
+    suggestedData = res;
+    data = response;
+    setState(() {
+      _loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +45,12 @@ class SearchView extends StatelessWidget {
         title: const Image(image: AssetImage('lib/static/logo.png'),height: 85,width: 85),
         actions: <Widget> [
           IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, PageTransition(
+              child: CustomSearch(),
+              type: PageTransitionType.rightToLeft
+            ));
+          },
           icon: const Icon(
             Icons.search,
             size: 30,
@@ -59,25 +92,34 @@ class SearchView extends StatelessWidget {
                  ],
                ),
              ),
-             PlayerCard(
-             userName: 'Sukuna', 
-             profileImageUrl: 'lib/static/max.jpg',
-             bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
-             PlayerCard(
-             userName: 'Decoy', 
-             profileImageUrl: 'lib/static/decoy.jpg',
-             bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'),
-             PlayerCard(
-             userName: 'Trident', 
-             profileImageUrl: 'lib/static/trident.jpg',
-             bio: 'Lorem ipsum dolor sit amet.'),
+             _loading ? const Center(
+              child: CircularProgressIndicator(
+                color: ConstantColors.secondaryColor,
+              ),
+            ) : SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: ListView.builder(
+             physics: const BouncingScrollPhysics(),
+             shrinkWrap: true,
+             itemCount: suggestedData['data'].length < 5 ? suggestedData['data'].length : 4,
+             itemBuilder: (context, index) {
+               return PlayerCard(
+                 userName: 
+                 suggestedData['data'][index]['username'], 
+                 profileImageUrl: suggestedData['data'][index]['profilePicture'] == 'none' ? 'https://res.cloudinary.com/df8qz9hlx/image/upload/v1651752696/wasd/default_rcmogi.jpg' : suggestedData['data'][index]['profilePicture'], 
+                 bio: suggestedData['data'][index]['description']);
+          }),
+        ),
+      ),
              Padding(
              padding: const EdgeInsets.all(10.0),
              child: Row(
                mainAxisAlignment: MainAxisAlignment.start,
                children: const [
                 Text(
-                   "Recently Played",
+                   "Recently Joined",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
@@ -93,32 +135,33 @@ class SearchView extends StatelessWidget {
                  children: [
                    Container(
                         height: 3.0,
-                        width: 150.0,
+                        width: 130.0,
                         color: ConstantColors.secondaryColor,
                     ),
                  ],
                ),
              ),
-             PlayerCard(
-             userName: 'Noa360', 
-             profileImageUrl: 'lib/static/profile.jpg',
-             bio: 'Lorem ipsum dolor sit amet'),
-             PlayerCard(
-             userName: 'Hurrikane', 
-             profileImageUrl: 'lib/static/hurrikane.jpg',
-             bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
-             PlayerCard(
-             userName: 'Catalyst', 
-             profileImageUrl: 'lib/static/catalyst.jpg',
-             bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elitaor magna aliqua.'),
-             PlayerCard(
-             userName: 'Mazzy', 
-             profileImageUrl: 'lib/static/mazzy.jpg',
-             bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'),
-             PlayerCard(
-             userName: 'Logosh', 
-             profileImageUrl: 'lib/static/logosh.jpg',
-             bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'),
+             _loading ? const Center(
+              child: CircularProgressIndicator(
+                color: ConstantColors.secondaryColor,
+              ),
+            ) : SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: ListView.builder(
+             physics: const BouncingScrollPhysics(),
+             shrinkWrap: true,
+             itemCount: 5,
+             itemBuilder: (context, index) {
+               return PlayerCard(
+                 userName: 
+                 data['users'][index]['username'], 
+                 profileImageUrl: data['users'][index]['profilePicture'] == 'none' ? 'https://res.cloudinary.com/df8qz9hlx/image/upload/v1651752696/wasd/default_rcmogi.jpg' : data['users'][index]['profilePicture'], 
+                 bio: data['users'][index]['description']);
+          }),
+        ),
+      ),
          ],
        ),
      )

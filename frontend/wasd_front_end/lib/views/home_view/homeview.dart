@@ -1,18 +1,36 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_unnecessary_containers, unnecessary_const
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import 'package:wasd_front_end/app/routes/routes.dart';
 import 'package:wasd_front_end/constants/constants.dart';
-import 'package:wasd_front_end/core/model/post_model.dart';
+import 'package:wasd_front_end/core/services/post_service.dart';
 import 'package:wasd_front_end/widgets/post_card.dart';
-// import 'package:wasd_front_end/core/notifier/authentication_notifier.dart';
-// import 'package:wasd_front_end/core/notifier/post_notifier.dart';
-// import 'package:wasd_front_end/core/services/cacheservice.dart';
-class HomeView extends StatelessWidget {
+
+class HomeView extends StatefulWidget {
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+
+  Map <String, dynamic> data = {};
+  bool _loading = true;
+
+  @override
+  void initState() { 
+    getFeedPosts();
+    super.initState();
+  }
+
+  Future<dynamic> getFeedPosts() async {
+    var response = await PostsAPI.fetchFeedPost();
+    data = response;
+    setState(() {
+      _loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    // PostNotifier postNotifier(bool renderUri) => Provider.of<PostNotifier>(context,listen: renderUri);
-    // CacheService _cacheService = CacheService();
     return Scaffold(
       backgroundColor: ConstantColors.backgroundColor,
       appBar: AppBar(
@@ -26,96 +44,30 @@ class HomeView extends StatelessWidget {
         ),
         ],
       ),
-      body: SingleChildScrollView(
+      body: _loading ? const Center(
+              child: CircularProgressIndicator(
+                color: ConstantColors.secondaryColor,
+              ),
+            ) : SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            PostCard(
-              user: 'Dante',
-              title: 'First Post sdads asdasda dad asd ad as das dadas da d',
-              imageUrl: 'lib/static/post3.jpg', 
-              likes: 10, profileImageUrl: 'lib/static/profile.jpg', 
-              comments: 2
-            ),
-            PostCard(
-              user: 'Trident',
-              title: 'First Post sdads asdasda dad asd ad as das dadas da d',
-              imageUrl: 'lib/static/post0.jpg', 
-              likes: 10, profileImageUrl: 'lib/static/trident.jpg', 
-              comments: 2
-            ),
-            PostCard(
-              user: 'Decoy',
-              title: 'First Post sdads asdasda dad asd ad as das dadas da d',
-              imageUrl: 'lib/static/post1.jpg', 
-              likes: 10, profileImageUrl: 'lib/static/decoy.jpg', 
-              comments: 2
-            ),
-            PostCard(
-              user: 'Sukuna',
-              title: 'First Post sdads asdasda dad asd ad as das dadas da d',
-              imageUrl: 'lib/static/post2.jpg', 
-              likes: 10, profileImageUrl: 'lib/static/max.jpg', 
-              comments: 2
-            ),
-          ],
-        ),
+        child: data['posts'].length == 0 ? const Center(child: Text("No Posts Found", style: TextStyle(
+                  color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),),) : 
+                  ListView.builder(
+           reverse: true,
+           physics: const BouncingScrollPhysics(),
+           shrinkWrap: true,
+           itemCount: data['posts'].length,
+           itemBuilder: (context, index) {
+             return PostCard(
+                user: data['posts'][index]['username'],
+                title: data['posts'][index]['title'],
+                imageUrl: data['posts'][index]['photo'], 
+                likes: data['posts'][index]['likes'].length, 
+                profileImageUrl: data['posts'][index]['userProfilePic'] == 'none' ? 'https://res.cloudinary.com/df8qz9hlx/image/upload/v1651752696/wasd/default_rcmogi.jpg' : data['posts'][index]['userProfilePic'], 
+                comments: data['posts'][index]['comments'].length
+          );
+        }),
       ),
     );
   }
 }
-
-class ListOfPosts extends StatelessWidget {
-  final dynamic snapshot;
-  const ListOfPosts({required this.snapshot});
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: snapshot.length,
-      itemBuilder: (context, index){
-        PostData postData = snapshot[index];
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(postData.postImages[0]),
-          ),
-          title: Text(postData.postTitle),
-        );
-      }
-    );
-  }
-}
-
-//Container(
-        // child: FutureBuilder(
-        //   future: postNotifier(false).fetchPost(context: context),
-        //   builder: (context,snapshot) {
-        //     if(snapshot.connectionState == ConnectionState.waiting){
-        //       return const Center(
-        //         child: const CircularProgressIndicator(),
-        //       );
-        //     }
-        //     else{
-        //       var _snapshot = snapshot.data as List;
-        //       return ListOfPosts(snapshot: _snapshot);
-        //     }
-        //   }
-        // ),
-//      )
-
-// floatingActionButton: FloatingActionButton(
-//         child: const Icon(Icons.add),
-//         onPressed: () async {
-//           postNotifier(false).fetchPost(context: context);
-//           final authenticationNotifier = Provider.of<AuthenticationNotifier>(context, listen: false);
-//           await authenticationNotifier.fetchUserEmail(context: context);
-//           Navigator.of(context).pushNamed(AddPostRoute);
-//         },
-//       )
-
-// IconButton(
-//           onPressed: () {
-//             // _cacheService.deleteCache(key: "jwt");
-//             // Navigator.of(context).pushReplacementNamed(LoginRoute);
-//           },
-//           icon: const Icon(Icons.message_outlined),
-//         ),

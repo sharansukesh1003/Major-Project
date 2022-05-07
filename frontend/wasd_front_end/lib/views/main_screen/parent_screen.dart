@@ -13,7 +13,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _pageIndex = 0;
+  int _pageIndex = 1;
 
   var options = [
     const BottomNavigationBarItem(

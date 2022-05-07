@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 class PostCard extends StatefulWidget {
@@ -35,10 +37,7 @@ class _PostCardState extends State<PostCard> {
                 radius: 20,
                 backgroundColor: Colors.white,
                 child: ClipOval(
-                child: Image(
-                fit: BoxFit.cover,
-                image: AssetImage(widget.profileImageUrl)
-                  ),
+                child: Image.network(widget.profileImageUrl, fit: BoxFit.cover,)
                 ),
               ),
               const SizedBox(width: 10.0),
@@ -57,10 +56,7 @@ class _PostCardState extends State<PostCard> {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.4,
           width: double.infinity,
-          child: Image(
-              fit: BoxFit.cover,
-              image: AssetImage(widget.imageUrl),
-            ),
+          child: Image.network(widget.imageUrl, fit: BoxFit.cover,)
         ),
         Row(
           children: [

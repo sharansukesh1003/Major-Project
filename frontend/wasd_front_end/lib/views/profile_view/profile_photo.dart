@@ -1,53 +1,32 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_unnecessary_containers, avoid_print, non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wasd_front_end/constants/constants.dart';
 import 'package:wasd_front_end/core/notifier/post_notifier.dart';
-import 'package:wasd_front_end/core/services/cacheservice.dart';
 import 'package:wasd_front_end/core/services/post_service.dart';
 
-class AddPost extends StatefulWidget {
+class ProfilePicture extends StatefulWidget {
+  const ProfilePicture({ Key? key }) : super(key: key);
+
   @override
-  State<AddPost> createState() => _AddPostState();
+  State<ProfilePicture> createState() => _ProfilePictureState();
 }
 
-class _AddPostState extends State<AddPost> {
-  TextEditingController titleController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    titleController = TextEditingController();
-  }
-
+class _ProfilePictureState extends State<ProfilePicture> {
+  PostNotifier postNotifier(bool renderUri) => Provider.of<PostNotifier>(context,listen: renderUri);
   @override
   Widget build(BuildContext context) {
-    PostNotifier postNotifier(bool renderUri) => Provider.of<PostNotifier>(context,listen: renderUri);
     return Scaffold(
-      backgroundColor: ConstantColors.primaryColor,
+      backgroundColor: ConstantColors.backgroundColor,
       appBar: AppBar(
-        backgroundColor: ConstantColors.backgroundColor,
-        elevation: 0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: const [
-          Text("P",
-            style: TextStyle(
-              color: ConstantColors.secondaryColor,
-              fontSize: 24,
-              fontWeight: FontWeight.bold
-            ),
-            ),
-            Text("ost",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold
-            ),
-            ),
-          ],
+          backgroundColor: ConstantColors.primaryColor,
+          elevation: 0,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Image(image: AssetImage('lib/static/logo.png'),height: 85,width: 85),
+            ],
+          ),
         ),
-      ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -66,7 +45,7 @@ class _AddPostState extends State<AddPost> {
                 ),
               ) : Column(
                 children: const [
-                  SizedBox(height: 50,),
+                  SizedBox(height: 50, width: double.infinity,),
                   CircleAvatar(
                     radius: 50,
                     backgroundColor: ConstantColors.secondaryColor,
@@ -86,29 +65,7 @@ class _AddPostState extends State<AddPost> {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: TextField(
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.white,
-                      ),
-                      controller: titleController,
-                      cursorHeight: 15.0,
-                      cursorColor: Colors.white,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 5.0),
-                        hintStyle: TextStyle(
-                          color: Colors.white54
-                        ),
-                        focusColor: Colors.white,
-                        hintText: "Enter title",
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        )
-                      ),
-                    ),
-              ),
+              const SizedBox(height: 15,),
               MaterialButton(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
                 color: ConstantColors.secondaryColor,
@@ -140,12 +97,11 @@ class _AddPostState extends State<AddPost> {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
                 color: ConstantColors.secondaryColor,
                 onPressed: () async {
-                  CacheService cacheService = CacheService();
-                  var id = await cacheService.readCache(key: "id");
                   await postNotifier(false).uploadUserImage(context: context);
                   var image = postNotifier(false).uploadedImageUrl;
-                  var data = await PostsAPI.post(titleController.text, image!, id);
+                  var data = await PostsAPI.profilePic(image!);
                   if (data['success']) {
+                    postNotifier(false).removeImages();
                     ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                           content: Text(data['message']),)
@@ -153,12 +109,12 @@ class _AddPostState extends State<AddPost> {
                       Navigator.pop(context);
                   }
                   else {
+                    postNotifier(false).removeImages();
                     ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                           content: Text(data.message),)
                       );
                   }
-                  postNotifier(false).removeImages();
                 }, 
                 child: const Text("Upload Image",
                     style: TextStyle(
@@ -172,4 +128,5 @@ class _AddPostState extends State<AddPost> {
         ),
     );
   }
+
 }
