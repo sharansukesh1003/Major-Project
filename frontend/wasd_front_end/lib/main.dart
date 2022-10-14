@@ -11,10 +11,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: providers,
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'WASD',
-        initialRoute: SplashRoute,
-        routes: routes,
+          debugShowCheckedModeBanner: false,
+          title: 'WASD',
+          initialRoute: SplashRoute,
+          routes: routes,
         ),
       );
     }

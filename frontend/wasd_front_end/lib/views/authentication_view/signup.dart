@@ -1,6 +1,4 @@
 // ignore_for_file: avoid_print, duplicate_ignore
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wasd_front_end/app/routes/routes.dart';
 import 'package:wasd_front_end/constants/constants.dart';

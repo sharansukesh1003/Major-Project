@@ -1,5 +1,4 @@
 // ignore_for_file: constant_identifier_names
-
 import 'package:wasd_front_end/views/add_posts/post_view.dart';
 import 'package:wasd_front_end/views/authentication_view/login.dart';
 import 'package:wasd_front_end/views/authentication_view/signup.dart';

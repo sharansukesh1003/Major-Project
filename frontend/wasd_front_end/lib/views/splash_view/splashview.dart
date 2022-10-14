@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:wasd_front_end/app/routes/routes.dart';
@@ -23,6 +22,7 @@ class _SplashViewState extends State<SplashView> {
     });
     super.initState();
   }
+  
   @override
   Widget build(BuildContext context) {
     return const Scaffold(

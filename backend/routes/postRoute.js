@@ -49,7 +49,7 @@ router.post("/upload", async (req, res) => {
     }
     catch (err) {
         return res.
-            status(200).
+            status(500).
             send({
                 message : "Server side error!",
                 success : false,
